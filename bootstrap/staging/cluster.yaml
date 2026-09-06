@@ -7,7 +7,9 @@ spec:
   interval: 1m0s
   ref:
     branch: staging
-  url: ssh://git@github.com/ocf/flux
+  secretRef:
+    name: flux-system
+  url: ssh://git@github.com/sophiebsw/ocf-flux
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -16,24 +18,22 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./cluster/prod
+  path: ./cluster/staging
   prune: true
   sourceRef:
     kind: GitRepository
     name: cluster
   patches:
-    - patch: |
+    - target:
+        kind: Kustomization 
+      patch: |
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
-          name: not-used
+          name: ignored
+          namespace: flux-system
           labels:
             ocf.berkeley.edu/cluster: staging
-    - patch: |
-        apiVersion: kustomize.toolkit.fluxcd.io/v1
-        kind: Kustomization
-        metadata:
-          name: not-used
         spec:
           decryption:
             provider: sops
