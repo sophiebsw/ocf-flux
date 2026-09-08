@@ -27,6 +27,14 @@ spec:
         name: contour
       version: 0.7.0
   interval: 10m0s
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
   values:
     envoy:
       resourcesPreset: large

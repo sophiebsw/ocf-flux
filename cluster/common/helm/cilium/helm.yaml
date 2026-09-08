@@ -28,6 +28,14 @@ spec:
         name: cilium
       version: 1.19.4 # {"$imagepolicy": "cilium:cilium:tag"}
   interval: 10m0s
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
   values:
     autoDirectNodeRoutes: true
     bpf:
